@@ -2,6 +2,7 @@ package me.kodysimpson.javabasedconfiguration.config;
 
 import me.kodysimpson.javabasedconfiguration.services.CircleShapeServiceImpl;
 import me.kodysimpson.javabasedconfiguration.services.RectangleShapeServiceImpl;
+import me.kodysimpson.javabasedconfiguration.services.SizeService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -11,18 +12,21 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 public class ShapeServiceConfig {
 
-    @Bean //use this annotation to mark methods that will return instantiated beans
-    @Profile("dev") //profiles can be used here
+    @Bean //a random bean we will inject into our shape services
+    public SizeService sizeService(){
+        return new SizeService();
+    }
+
+    @Bean
+    @Profile("dev") //nothing needs to be changed here since the rectangleshapeservice is using prop injection
     public RectangleShapeServiceImpl rectangleShapeService(){
-        //this time, you explicitly instantiate the objects rather than Spring
         return new RectangleShapeServiceImpl();
     }
 
-    @Bean //use this annotation to mark methods that will return instantiated beans
-    @Profile("prod")
-    //@Primary this also works here
-    public CircleShapeServiceImpl circleShapeService(){
-        return new CircleShapeServiceImpl();
+    @Bean
+    @Profile("prod") //Spring will pass the dependency bean into this method so you can instantiate properly
+    public CircleShapeServiceImpl circleShapeService(SizeService sizeService){
+        return new CircleShapeServiceImpl(sizeService);
     }
 
 }
