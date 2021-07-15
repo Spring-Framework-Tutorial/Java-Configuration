@@ -10,12 +10,15 @@ import me.kodysimpson.javabasedconfiguration.services.ShapeService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ImportResource;
 
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 @SpringBootApplication
+//import the xml config file. This can go on any of your other @Configuration classes too
+@ImportResource("classpath:beans.xml")
 public class JavaBasedConfigurationApplication extends GameApplication {
 
     private static ShapeService shapeService;

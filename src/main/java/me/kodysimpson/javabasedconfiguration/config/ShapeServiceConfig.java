@@ -12,10 +12,11 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 public class ShapeServiceConfig {
 
-    @Bean //a random bean we will inject into our shape services
-    public SizeService sizeService(){
-        return new SizeService();
-    }
+    //no need for this anymore since we use xml config for this bean
+    //@Bean //a random bean we will inject into our shape services
+    //public SizeService sizeService(){
+    //    return new SizeService();
+    //}
 
     @Bean
     @Profile("dev") //nothing needs to be changed here since the rectangleshapeservice is using prop injection
